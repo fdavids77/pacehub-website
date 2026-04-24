@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PaceHub — A running club's home on the internet</title>
+<meta name="description" content="Built by a runner for South African running clubs. Free for small clubs. Your race calendar, pace group plans, member directory, and personal bests — all in one place.">
+<meta property="og:title" content="PaceHub — A running club's home on the internet">
+<meta property="og:description" content="Built by a runner for South African running clubs. Free for small clubs.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://pacehub.club">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0D0D0D;
+  --surface: #1E1E1E;
+  --surface-2: #252525;
+  --text: #F1F5F9;
+  --text-mute: #94A3B8;
+  --text-dim: #64748B;
+  --red: #E53A3C;
+  --red-soft: rgba(229, 58, 60, 0.12);
+  --red-glow: rgba(229, 58, 60, 0.4);
+  --green: #7EBB4E;
+  --green-soft: rgba(126, 187, 78, 0.12);
+  --blue: #5B9BD5;
+  --blue-soft: rgba(91, 155, 213, 0.12);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.15);
+  --display: 'DM Serif Display', Georgia, serif;
+  --body: 'DM Sans', system-ui, sans-serif;
+  --mono: 'DM Mono', ui-monospace, monospace;
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* NAV */
+nav {
+  padding: 22px 32px;
+  position: sticky;
+  top: 0;
+  background: rgba(13,13,13,0.88);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+}
+nav .brand {
+  font-family: var(--display);
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+}
+nav .brand em { color: var(--red); font-style: italic; }
+nav .links {
+  display: none;
+  gap: 28px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+nav .links a { color: var(--text-mute); text-decoration: none; transition: color 0.2s; }
+nav .links a:hover { color: var(--red); }
+@media (min-width: 900px) { nav .links { display: flex; } }
+nav .cta {
+  background: var(--red);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 13px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+nav .cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px var(--red-soft);
+}
+
+/* HERO */
+.hero {
+  padding: 100px 32px 80px;
+  max-width: 1280px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -120px; left: 50%;
+  transform: translateX(-50%);
+  width: 900px; height: 600px;
+  background: radial-gradient(ellipse at center, var(--red-soft) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: -1;
+}
+.hero .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 1.8px;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 32px;
+  padding: 8px 18px;
+  border: 1px solid var(--red-soft);
+  border-radius: 999px;
+  background: rgba(229,58,60,0.06);
+}
+.hero .eyebrow::before {
+  content: '';
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 0 14px var(--red);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+.hero h1 {
+  font-family: var(--display);
+  font-size: clamp(44px, 9vw, 104px);
+  line-height: 0.96;
+  letter-spacing: -0.022em;
+  font-weight: 400;
+  margin-bottom: 32px;
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.hero h1 em { color: var(--red); font-style: italic; }
+.hero .lede {
+  font-size: clamp(18px, 2vw, 22px);
+  line-height: 1.5;
+  color: var(--text-mute);
+  max-width: 720px;
+  margin: 0 auto 48px;
+}
+.hero .cta-row {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 64px;
+}
+.btn {
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+.btn-primary {
+  background: var(--red);
+  color: #fff;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--red-soft);
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+}
+.btn-ghost:hover { background: var(--surface); }
+
+.trust-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 32px;
+  padding-top: 36px;
+  border-top: 1px solid var(--border);
+  max-width: 860px;
+  margin: 0 auto;
+}
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.trust-item::before {
+  content: '✓';
+  color: var(--green);
+  font-family: var(--body);
+  font-weight: 700;
+}
+
+/* SECTION */
+.section {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 100px 32px;
+  border-top: 1px solid var(--border);
+}
+.section-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-eyebrow::before {
+  content: '';
+  width: 24px; height: 1px;
+  background: var(--red);
+}
+.section h2 {
+  font-family: var(--display);
+  font-size: clamp(36px, 5.5vw, 64px);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  font-weight: 400;
+  max-width: 920px;
+  margin-bottom: 24px;
+}
+.section h2 em { color: var(--red); font-style: italic; }
+.section-lede {
+  font-size: clamp(17px, 1.8vw, 19px);
+  color: var(--text-mute);
+  line-height: 1.65;
+  max-width: 680px;
+  margin-bottom: 60px;
+}
+
+/* MISSION SECTION */
+.mission {
+  background: linear-gradient(180deg, transparent, rgba(229,58,60,0.04) 50%, transparent);
+}
+.mission-statement {
+  font-family: var(--display);
+  font-size: clamp(24px, 3.5vw, 44px);
+  line-height: 1.25;
+  letter-spacing: -0.012em;
+  max-width: 960px;
+  margin: 0 auto;
+  text-align: center;
+}
+.mission-statement em { color: var(--red); font-style: italic; }
+.mission-rows {
+  max-width: 860px;
+  margin: 72px auto 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2px;
+  background: var(--border);
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.mission-row {
+  background: var(--surface);
+  padding: 28px 32px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  align-items: start;
+}
+@media (min-width: 720px) {
+  .mission-row { grid-template-columns: 180px 1fr; gap: 32px; }
+}
+.mission-row .key {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--red);
+  padding-top: 4px;
+}
+.mission-row .val {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--text);
+}
+.mission-row .val strong { font-weight: 500; }
+
+/* CATEGORY SPLIT */
+.category-split {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+@media (min-width: 900px) { .category-split { grid-template-columns: 1fr 1fr; } }
+.cat-card {
+  padding: 32px;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+}
+.cat-card.not {
+  background: transparent;
+}
+.cat-card.is {
+  background: linear-gradient(135deg, var(--red-soft), transparent);
+  border-color: var(--red-glow);
+}
+.cat-card .tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.cat-card.not .tag { color: var(--text-dim); }
+.cat-card.is .tag { color: var(--red); }
+.cat-card h3 {
+  font-family: var(--display);
+  font-size: clamp(22px, 2.6vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.008em;
+  margin-bottom: 14px;
+  line-height: 1.2;
+}
+.cat-card ul { list-style: none; }
+.cat-card li {
+  padding: 8px 0;
+  font-size: 15px;
+  color: var(--text-mute);
+  line-height: 1.5;
+  display: flex;
+  align-items: start;
+  gap: 10px;
+}
+.cat-card.not li::before { content: '—'; color: var(--text-dim); }
+.cat-card.is li::before { content: '→'; color: var(--red); font-weight: 700; }
+
+/* FEATURE GRID */
+.feature-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 720px) { .feature-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1100px) { .feature-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.fcard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  transition: all 0.3s;
+}
+.fcard:hover {
+  border-color: var(--red-glow);
+  transform: translateY(-2px);
+}
+.fcard .icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: var(--red-soft);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 16px;
+}
+.fcard h4 {
+  font-family: var(--display);
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+.fcard p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-mute);
+}
+
+/* DIFFERENCE — what we are ahead on */
+.diff-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  max-width: 960px;
+}
+.diff-row {
+  background: var(--surface);
+  padding: 28px 32px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+@media (min-width: 720px) {
+  .diff-row { grid-template-columns: 220px 1fr; gap: 32px; align-items: start; }
+}
+.diff-row .diff-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  color: var(--red);
+}
+.diff-row .diff-title {
+  font-family: var(--display);
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+.diff-row .diff-body {
+  color: var(--text-mute);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* COMPARISON TABLE */
+.compare-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 8px;
+  overflow-x: auto;
+  max-width: 1100px;
+}
+.compare-table {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+}
+.compare-table th, .compare-table td {
+  padding: 14px 16px;
+  text-align: left;
+  font-size: 14px;
+}
+.compare-table th {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  border-bottom: 1px solid var(--border);
+  font-weight: 500;
+}
+.compare-table td { border-bottom: 1px solid var(--border); }
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table td:first-child { color: var(--text); font-weight: 500; }
+.compare-table .yes { color: var(--green); }
+.compare-table .no { color: var(--text-dim); }
+.compare-table .partial { color: #F59E0B; }
+.compare-table .us { color: var(--red); font-weight: 700; }
+.compare-table .col-us { background: rgba(229,58,60,0.05); }
+
+/* ROADMAP TIMELINE */
+.roadmap {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  max-width: 960px;
+  position: relative;
+}
+.rm-row {
+  padding: 24px 0 24px 48px;
+  position: relative;
+  border-left: 2px solid var(--border);
+}
+.rm-row:last-child { border-left-color: transparent; padding-bottom: 0; }
+.rm-row::before {
+  content: '';
+  position: absolute;
+  left: -9px; top: 28px;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--border);
+}
+.rm-row.live::before { background: var(--green); border-color: var(--green); box-shadow: 0 0 12px var(--green); }
+.rm-row.next::before { background: var(--red); border-color: var(--red); box-shadow: 0 0 12px var(--red); }
+.rm-row .rm-tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+  margin-bottom: 10px;
+}
+.rm-row.live .rm-tag { background: var(--green-soft); color: var(--green); }
+.rm-row.next .rm-tag { background: var(--red-soft); color: var(--red); }
+.rm-row.later .rm-tag { background: var(--surface); color: var(--text-dim); border: 1px solid var(--border); }
+.rm-row h4 {
+  font-family: var(--display);
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+.rm-row p { font-size: 14px; color: var(--text-mute); line-height: 1.6; }
+
+/* PRICING / PHILOSOPHY */
+.pricing {
+  background: linear-gradient(135deg, rgba(229,58,60,0.1), rgba(229,58,60,0.02));
+  border: 1px solid var(--red-soft);
+  border-radius: 24px;
+  padding: 56px 48px;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.pricing .label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 1.8px;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.pricing h3 {
+  font-family: var(--display);
+  font-size: clamp(32px, 4.5vw, 48px);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+.pricing h3 em { color: var(--red); font-style: italic; }
+.pricing p {
+  font-size: 16px;
+  color: var(--text-mute);
+  max-width: 560px;
+  margin: 0 auto 28px;
+}
+
+/* FAQ */
+.faq {
+  max-width: 860px;
+  margin: 0 auto;
+}
+.faq-item {
+  border-bottom: 1px solid var(--border);
+  padding: 24px 0;
+}
+.faq-item:first-child { border-top: 1px solid var(--border); }
+.faq-item summary {
+  font-family: var(--display);
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: '+';
+  font-family: var(--body);
+  font-weight: 400;
+  color: var(--red);
+  font-size: 24px;
+  transition: transform 0.2s;
+}
+.faq-item[open] summary::after { content: '−'; }
+.faq-item p {
+  color: var(--text-mute);
+  font-size: 15px;
+  line-height: 1.7;
+  margin-top: 16px;
+  padding-right: 40px;
+}
+
+/* CTA BAND */
+.cta-band {
+  margin: 120px auto 100px;
+  max-width: 1280px;
+  padding: 72px 40px;
+  background: linear-gradient(135deg, rgba(229,58,60,0.14), rgba(229,58,60,0.02));
+  border: 1px solid var(--red-soft);
+  border-radius: 28px;
+  text-align: center;
+}
+.cta-band h3 {
+  font-family: var(--display);
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.05;
+  margin-bottom: 16px;
+}
+.cta-band h3 em { color: var(--red); font-style: italic; }
+.cta-band p {
+  color: var(--text-mute);
+  font-size: 17px;
+  margin-bottom: 32px;
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.cta-band .btns {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 56px 32px 40px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  max-width: 1280px;
+  margin: 0 auto;
+  font-size: 14px;
+  color: var(--text-dim);
+}
+@media (min-width: 720px) { footer { grid-template-columns: 2fr 1fr 1fr 1fr; } }
+footer .brand-col .brand-name {
+  font-family: var(--display);
+  font-size: 22px;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+footer .brand-col .brand-name em { color: var(--red); font-style: italic; }
+footer .brand-col p { max-width: 280px; line-height: 1.55; }
+footer h5 {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 14px;
+}
+footer ul { list-style: none; }
+footer li { margin-bottom: 8px; }
+footer a { color: var(--text-mute); text-decoration: none; transition: color 0.2s; }
+footer a:hover { color: var(--red); }
+.footer-bottom {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px 32px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">PaceHub<em>.club</em></div>
+  <div class="links">
+    <a href="#what">What it is</a>
+    <a href="#features">Features</a>
+    <a href="#different">What makes it different</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <a href="#contact" class="cta">Get your club onboarded →</a>
+</nav>
+
+<!-- ================================================= -->
+<!-- ================= HERO ========================== -->
+<!-- ================================================= -->
+<section class="hero">
+  <div class="eyebrow">For South African running clubs</div>
+  <h1>Your running club's<br>home on the <em>internet.</em></h1>
+  <p class="lede">The race calendar, the pace group schedule, the roster, the committee notices, your PBs, your race history, your badges — all in one place. Built by a runner, for the club, with zero cost for clubs that need it free.</p>
+  <div class="cta-row">
+    <a href="#contact" class="btn btn-primary">Bring your club aboard →</a>
+    <a href="#what" class="btn btn-ghost">See what it does</a>
+  </div>
+  <div class="trust-row">
+    <div class="trust-item">SA-first</div>
+    <div class="trust-item">ASA / WPA-aware</div>
+    <div class="trust-item">Free for small clubs</div>
+    <div class="trust-item">Your data, your server</div>
+    <div class="trust-item">No app store needed</div>
+  </div>
+</section>
+
+<!-- ================================================= -->
+<!-- ================= MISSION ======================= -->
+<!-- ================================================= -->
+<section class="section mission" id="what">
+  <div style="text-align:center;">
+    <div class="section-eyebrow" style="display:inline-flex;">The mission</div>
+  </div>
+  <p class="mission-statement" style="margin-top:24px;">
+    PaceHub is a running club's <em>home on the internet.</em><br>
+    Not the app that tracks your runs.<br>
+    Not the platform that takes your race entry fees.<br>
+    Not the notice-board hacked into a WhatsApp group.<br>
+    <strong style="color:var(--red);font-style:italic;">It's where your club's season actually lives.</strong>
+  </p>
+
+  <div class="mission-rows">
+    <div class="mission-row">
+      <div class="key">Built by</div>
+      <div class="val">A runner on a real running club committee. Not a startup team guessing at club dynamics from an office overseas.</div>
+    </div>
+    <div class="mission-row">
+      <div class="key">Built for</div>
+      <div class="val">South African running clubs operating in the ASA / WPA / provincial federation structure. Club types, ASA licences, pace groups, race calendars — the data model actually matches how SA running works.</div>
+    </div>
+    <div class="mission-row">
+      <div class="key">Priced at</div>
+      <div class="val"><strong>R0 for small clubs.</strong> Always. If you're under 200 members and run on volunteer time, PaceHub is free, forever. Larger clubs and future features stay affordable.</div>
+    </div>
+    <div class="mission-row">
+      <div class="key">Owned by</div>
+      <div class="val">The club. Your data is yours. Export it at any time. Walk away if you want. The explicit agreement says so.</div>
+    </div>
+    <div class="mission-row">
+      <div class="key">Lives at</div>
+      <div class="val"><strong style="color:var(--red);font-family:var(--mono);">pacehub.club</strong> — a progressive web app. No App Store download. Works on any phone with a browser. Installable if members want, push notifications and all.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================= -->
+<!-- ============ WHAT IT IS / ISN'T ================= -->
+<!-- ================================================= -->
+<section class="section">
+  <div class="section-eyebrow">The category</div>
+  <h2>Know what we <em>are</em>.<br>Know what we <em>aren't</em>.</h2>
+  <p class="section-lede">There's a lot of software in this space already. Most of it isn't built for you.</p>
+
+  <div class="category-split">
+    <div class="cat-card not">
+      <div class="tag">We are NOT</div>
+      <h3>Another running app.</h3>
+      <ul>
+        <li>Not a GPS tracker (that's Strava, Garmin, Apple Fitness)</li>
+        <li>Not a race entry portal (that's RaceTec, Entry Ninja, Top Events)</li>
+        <li>Not a training coach (that's Runna, Pace to Race)</li>
+        <li>Not generic "club management SaaS" trying to do everything</li>
+        <li>Not a WhatsApp replacement — the social chat stays where it is</li>
+      </ul>
+    </div>
+    <div class="cat-card is">
+      <div class="tag">We ARE</div>
+      <h3>A digital home for your club.</h3>
+      <ul>
+        <li>Where the season lives — calendar, schedule, stats, messages</li>
+        <li>Where the committee runs the club without spreadsheets</li>
+        <li>Where coaches manage their pace group without WhatsApp chaos</li>
+        <li>Where members see their runs, races, PBs, badges in one place</li>
+        <li>Where the ASA / WPA structure is native — not a bolt-on</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================= -->
+<!-- ============ FEATURES / WHAT IT DOES ============ -->
+<!-- ================================================= -->
+<section class="section" id="features">
+  <div class="section-eyebrow">What it does</div>
+  <h2>One platform.<br>Every <em>role.</em></h2>
+  <p class="section-lede">PaceHub handles three distinct audiences — each gets what they need and nothing they don't.</p>
+
+  <h3 style="font-family:var(--display);font-size:28px;font-weight:400;margin-bottom:24px;letter-spacing:-0.008em;color:var(--red);">For members</h3>
+  <div class="feature-grid" style="margin-bottom:64px;">
+    <div class="fcard">
+      <div class="icon">🏠</div>
+      <h4>Home feed</h4>
+      <p>Next run, next race, your year's stats — all visible before any tap. Pinned notices sit right below.</p>
+    </div>
+    <div class="fcard">
+      <div class="icon">🏁</div>
+      <h4>Race calendar</h4>
+      <p>Hundreds of SA races, sorted by month. Tap to RSVP, bell icon for reminders, star for featured club races.</p>
+    </div>
+    <div class="fcard">
+      <div class="icon">📊</div>
+      <h4>Your stats</h4>
+      <p>Races completed, total distance, PBs per distance. Auto-updated when the committee uploads race results.</p>
+    </div>
+    <div class="fcard">
+      <div class="icon">📅</div>
+      <h4>Run plan</h4>
+      <p>Coach's planned runs and races you've RSVP'd to, in one schedule. Training and racing together.</p>
+    </div>
+    <div class="fcard">
+      <div class="icon">🏅</div>
+      <h4>Race history &amp; badges</h4>
+      <p>Every finish kept by the club. Badges unlock automatically — First Steps, 10K Finisher, Half Marathon, Marathon Hero, Century Legs.</p>
+    </div>
+    <div class="fcard">
+      <div class="icon">💬</div>
+      <h4>Official messages</h4>
+      <p>Committee and coach messages arrive with 🛡 ADMIN or 👟 COACH badges. Members always know what's official.</p>
+    </div>
+  </div>
+
+  <h3 style="font-family:var(--display);font-size:28px;font-weight:400;margin-bottom:24px;letter-spacing:-0.008em;color:var(--green);">For coaches</h3>
+  <div class="feature-grid" style="margin-bottom:64px;">
+    <div class="fcard">
+      <div class="icon">👟</div>
+      <h4>Coach dashboard</h4>
+      <p>Your posts with live RSVP counts — Going, Can't, Maybe. Three tabs cover every daily coaching action.</p>
+    </div>
+    <div class="fcard">
+      <div class="icon">📝</div>
+      <h4>Five post types</h4>
+      <p>Group Run, LSD Run, Intervals, Race Prep, Message. Each pre-fills the right fields. Thirty seconds to post.</p>
+    </div>
+    <div class="fcard">
+      <div class="icon">👥</div>
+      <h4>Self-service roster</h4>
+      <p>Add or move a member into your pace group without emailing the admin. Every move logged, every change audited.</p>
+    </div>
+    <div class="fcard">
+      <div class="icon">📣</div>
+      <h4>Group messaging</h4>
+      <p>One message, every member of your pace group gets it privately with a 👟 COACH badge. Replies stay confidential.</p>
+    </div>
+    <div class="fcard">
+      <div class="icon">✅</div>
+      <h4>RSVP breakdown</h4>
+      <p>Who's coming on Saturday. Who's not. Who's maybe. By name. Before 5am, when you need to know.</p>
+    </div>
+    <div class="fcard">
+      <div class="icon">🔔</div>
+      <h4>Push notifications</h4>
+      <p>Your post fires an instant notification to every member's phone. No "did you see my message?"</p>
+    </div>
+  </div>
+
+  <h3 style="font-family:var(--display);font-size:28px;font-weight:400;margin-bottom:24px;letter-spacing:-0.008em;color:var(--blue);">For the committee</h3>
+  <div class="feature-grid">
+    <div class="fcard">
+      <div class="icon">📈</div>
+      <h4>Admin overview</h4>
+      <p>Active accounts, active members, upcoming sessions, last-30-days logins. The whole club, one dashboard.</p>
+    </div>
+    <div class="fcard">
+      <div class="icon">👨‍👩‍👧‍👦</div>
+      <h4>Member management</h4>
+      <p>Full roster with ASA licence tracking, demographic data, emergency contacts. Search, filter, bulk-import from CSV.</p>
+    </div>
+    <div class="fcard">
+      <div class="icon">🛡</div>
+      <h4>Broadcast comms</h4>
+      <p>One member, a pace group, or the whole club. Members see the 🛡 ADMIN badge. Every send audit-logged with read receipts.</p>
+    </div>
+    <div class="fcard">
+      <div class="icon">📊</div>
+      <h4>Attendance tracking</h4>
+      <p>Per-session roster with RSVP, present, absent, cancelled. Reports for AGM prep and coach performance.</p>
+    </div>
+    <div class="fcard">
+      <div class="icon">📣</div>
+      <h4>Announcements</h4>
+      <p>Three types — Notice, RSVP Event, Poll. Set expiry dates, pin to feed, track responses in real time.</p>
+    </div>
+    <div class="fcard">
+      <div class="icon">🏁</div>
+      <h4>Race calendar editor</h4>
+      <p>Add races, import CSVs, mark featured, track member interest. Your club's season, curated by the committee.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================= -->
+<!-- ========== WHAT MAKES US DIFFERENT ============== -->
+<!-- ================================================= -->
+<section class="section" id="different">
+  <div class="section-eyebrow">Where we're ahead</div>
+  <h2>What makes PaceHub<br><em>different.</em></h2>
+  <p class="section-lede">Seven things no other platform in this space offers SA running clubs. These are the reasons PaceHub exists.</p>
+
+  <div class="diff-list">
+    <div class="diff-row">
+      <div>
+        <div class="diff-num">01 · Federation-native</div>
+      </div>
+      <div>
+        <div class="diff-title">Built for ASA / WPA / provincial structure.</div>
+        <div class="diff-body">ASA licence numbers, club types (club/social/new member), athlete roles (athlete/coach/technical officer/office bearer), provincial affiliation — these aren't custom fields bolted onto generic software. They're native to the data model. International platforms can't replicate this without rebuilding from scratch.</div>
+      </div>
+    </div>
+    <div class="diff-row">
+      <div>
+        <div class="diff-num">02 · Coach as first class</div>
+      </div>
+      <div>
+        <div class="diff-title">Your coaches get their own dashboard.</div>
+        <div class="diff-body">Other platforms have "admin" and "member." PaceHub has admin, coach, and member — three role levels, each with the right permissions. The coach experience is substantially richer than anywhere else: their own dashboard, their own feed, their own roster, their own broadcast channel.</div>
+      </div>
+    </div>
+    <div class="diff-row">
+      <div>
+        <div class="diff-num">03 · The SA race calendar</div>
+      </div>
+      <div>
+        <div class="diff-title">Every race. Sorted by month. Curated.</div>
+        <div class="diff-body">Hundreds of South African races loaded and filterable by month, distance, and province. Each with entry URL, organiser details, and a featured flag for club priority races. Growing with every season. Nothing else in the SA market even attempts this.</div>
+      </div>
+    </div>
+    <div class="diff-row">
+      <div>
+        <div class="diff-num">04 · Race results import</div>
+      </div>
+      <div>
+        <div class="diff-title">Upload a CSV, everyone's PBs update.</div>
+        <div class="diff-body">Admin uploads race results, platform matches finishers to members by ASA licence or name, inserts into race history, recomputes PBs across distances, awards new badges, posts a summary to pace group feeds. What used to be Sunday-evening manual work now takes 30 seconds.</div>
+      </div>
+    </div>
+    <div class="diff-row">
+      <div>
+        <div class="diff-num">05 · Official messaging with badges</div>
+      </div>
+      <div>
+        <div class="diff-title">Members always know what's from the club.</div>
+        <div class="diff-body">When an admin or coach messages you, the message arrives with a visible 🛡 ADMIN or 👟 COACH badge above the bubble. You always know whether it's official or a peer chat. No platform anywhere else has this. It's a small detail with a big trust impact.</div>
+      </div>
+    </div>
+    <div class="diff-row">
+      <div>
+        <div class="diff-num">06 · No app store required</div>
+      </div>
+      <div>
+        <div class="diff-title">Works on any phone, any browser.</div>
+        <div class="diff-body">Progressive web app. Installable with one tap, push notifications work, offline caching for known pages. No iOS developer account needed, no Android review queue, no "my phone is too old" excuses. Every member can use it, regardless of their device.</div>
+      </div>
+    </div>
+    <div class="diff-row">
+      <div>
+        <div class="diff-num">07 · Built by a member</div>
+      </div>
+      <div>
+        <div class="diff-title">Free for small clubs. Forever.</div>
+        <div class="diff-body">This isn't a SaaS. There are no investors demanding revenue. PaceHub is built by a runner who sits on a club committee, understands the constraints, and wants to give back to the running community. Small clubs run free, always. The code is (going) open-source. The club owns its data. The agreement is explicit.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================= -->
+<!-- ============ COMPARISON TABLE =================== -->
+<!-- ================================================= -->
+<section class="section">
+  <div class="section-eyebrow">How we compare</div>
+  <h2>PaceHub vs the <em>alternatives.</em></h2>
+  <p class="section-lede">Honest comparison with the platforms you might evaluate alongside PaceHub. We're not ahead on everything — but on the things that matter for SA clubs, we're the only option.</p>
+
+  <div class="compare-wrap">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th class="col-us">PaceHub</th>
+          <th>Pace (UK)</th>
+          <th>ClubPal</th>
+          <th>Strava Clubs</th>
+          <th>Springly</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Pace group management</td>         <td class="col-us us">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">—</td><td class="no">—</td></tr>
+        <tr><td>Coach role with dashboard</td>      <td class="col-us us">✓</td><td class="no">—</td><td class="partial">partial</td><td class="no">—</td><td class="no">—</td></tr>
+        <tr><td>Self-service coach roster</td>      <td class="col-us us">✓</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="no">—</td></tr>
+        <tr><td>Run session RSVP</td>                <td class="col-us us">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="partial">limited</td><td class="yes">✓</td></tr>
+        <tr><td>ADMIN / COACH message badges</td>   <td class="col-us us">✓</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="no">—</td></tr>
+        <tr><td>SA race calendar (100+ races)</td>   <td class="col-us us">✓</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="no">—</td></tr>
+        <tr><td>Auto-tracked PBs per distance</td>   <td class="col-us us">✓</td><td class="no">—</td><td class="no">—</td><td class="partial">via Strava</td><td class="no">—</td></tr>
+        <tr><td>Race results CSV import</td>         <td class="col-us us">Phase 2</td><td class="no">—</td><td class="no">—</td><td class="partial">via Strava API</td><td class="no">—</td></tr>
+        <tr><td>ASA / WPA licence tracking</td>      <td class="col-us us">✓</td><td class="no">—</td><td class="partial">EA equiv</td><td class="no">—</td><td class="no">—</td></tr>
+        <tr><td>Member directory + follow</td>       <td class="col-us us">✓</td><td class="no">—</td><td class="no">—</td><td class="partial">activity-based</td><td class="yes">✓</td></tr>
+        <tr><td>Online membership payments</td>      <td class="col-us partial">Phase 3</td><td class="no">—</td><td class="yes">✓</td><td class="no">—</td><td class="yes">✓</td></tr>
+        <tr><td>Club discovery map</td>              <td class="col-us partial">Phase 5+</td><td class="yes">✓</td><td class="no">—</td><td class="yes">✓</td><td class="no">—</td></tr>
+        <tr><td>Progressive web app</td>             <td class="col-us us">✓</td><td class="no">native</td><td class="no">native</td><td class="no">native</td><td class="partial">web</td></tr>
+        <tr><td>Open-source code</td>                <td class="col-us partial">Phase 3</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="no">—</td></tr>
+        <tr><td>POPIA-aware</td>                      <td class="col-us partial">Phase 2</td><td class="no">GDPR</td><td class="no">GDPR</td><td class="no">generic</td><td class="no">generic</td></tr>
+        <tr><td><strong>Price for small SA club</strong></td><td class="col-us us"><strong>R0</strong></td><td>Free + paid</td><td>Free / 2.5% fee</td><td>Free</td><td>Free + paid</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="margin-top:24px;font-family:var(--mono);font-size:11px;letter-spacing:1.2px;color:var(--text-dim);text-align:center;max-width:680px;margin-left:auto;margin-right:auto;">Features marked "Phase N" are on the roadmap — see below. Platforms compared are accurate as of April 2026 based on their public documentation.</p>
+</section>
+
+<!-- ================================================= -->
+<!-- ================= ROADMAP ======================= -->
+<!-- ================================================= -->
+<section class="section" id="roadmap">
+  <div class="section-eyebrow">Where we're going</div>
+  <h2>Roadmap in the <em>open.</em></h2>
+  <p class="section-lede">No marketing fluff. Here's exactly what's shipped, what's shipping, and what's coming.</p>
+
+  <div class="roadmap">
+    <div class="rm-row live">
+      <span class="rm-tag">Live now · Phase 1</span>
+      <h4>Foundation — member, coach &amp; committee platform</h4>
+      <p>Member directory, pace group feeds, race calendar, run schedules, RSVPs, stats &amp; PBs, race history, badges, coach dashboard, admin management, official messaging with role badges, announcements (notice/poll/RSVP), attendance tracking. Progressive web app. Live for pilot club.</p>
+    </div>
+    <div class="rm-row next">
+      <span class="rm-tag">Shipping next · Phase 2 · Q2-Q3 2026</span>
+      <h4>Race results + POPIA compliance + public onboarding</h4>
+      <p>Upload race result CSVs, auto-match finishers to members, recompute PBs, award badges, post pace-group summaries. POPIA compliance layer — consent capture, data export, right-to-erasure, Privacy Policy, Information Officer registration. Public pacehub.club website for prospective clubs.</p>
+    </div>
+    <div class="rm-row later">
+      <span class="rm-tag">Phase 3 · Q4 2026</span>
+      <h4>Online membership payments</h4>
+      <p>Collect annual fees via South African payment rails — PayShap, Ozow, Yoco, SnapScan. Bulk renewal reminders, automated receipts, payment tracking per member. Optional feature — clubs who prefer manual EFT can keep doing that.</p>
+    </div>
+    <div class="rm-row later">
+      <span class="rm-tag">Phase 3 · Q4 2026</span>
+      <h4>Open-source release</h4>
+      <p>Code published under permissive license. Clubs can self-host if they want. Community can contribute. Not a single point of failure tied to one maintainer.</p>
+    </div>
+    <div class="rm-row later">
+      <span class="rm-tag">Phase 4 · Q1 2027</span>
+      <h4>Multi-tenant — more clubs onboarded</h4>
+      <p>One platform, many clubs. Proper data isolation. Club-level branding. Ready for wider SA rollout.</p>
+    </div>
+    <div class="rm-row later">
+      <span class="rm-tag">Phase 5+ · 2027</span>
+      <h4>Club discovery + website builder</h4>
+      <p>Public map where runners can find clubs near them. Lightweight website builder so clubs can have a public-facing landing page without a web designer. Merchandise shop for selling vests and caps.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================= -->
+<!-- ================= PRICING ======================= -->
+<!-- ================================================= -->
+<section class="section">
+  <div class="pricing">
+    <div class="label">The pricing promise</div>
+    <h3>Free for small clubs.<br><em>Always.</em></h3>
+    <p>If your club has fewer than 200 members and runs on volunteer time, PaceHub is free, forever. No trial period. No card required. No "we reserve the right to change this." Larger clubs pay a modest fee when you grow. Transactional features (when they arrive) take a small percentage, only when money actually flows through the platform. The promise is written into the code and the agreement.</p>
+    <a href="#contact" class="btn btn-primary">Bring your club aboard</a>
+  </div>
+</section>
+
+<!-- ================================================= -->
+<!-- ================= FAQ =========================== -->
+<!-- ================================================= -->
+<section class="section" id="faq">
+  <div class="section-eyebrow">Questions</div>
+  <h2>Common <em>questions.</em></h2>
+  <p class="section-lede">The ones every committee asks before committing.</p>
+
+  <div class="faq">
+    <details class="faq-item">
+      <summary>Is this really free for our club?</summary>
+      <p>Yes. If you're under 200 members and volunteer-run, PaceHub is R0 — no trial timer, no credit card, no "free tier that quietly deprecates." This isn't a marketing tactic; it's a commitment written into the platform agreement. Larger clubs (250+) will have a modest monthly fee when Phase 3 ships, but every SA running club under 200 members will stay free.</p>
+    </details>
+    <details class="faq-item">
+      <summary>What about POPIA compliance?</summary>
+      <p>Taken seriously. All member data is hosted in South Africa on infrastructure we control. Phase 2 (Q2-Q3 2026) introduces the full POPIA compliance layer — consent at signup, data export on demand, right-to-erasure, written Privacy Policy, Information Officer designation, breach notification process. The club remains the responsible party for its members' data; PaceHub is the processor. Proper data-processing agreement provided.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Who owns the data?</summary>
+      <p>The club does. Always. Every member record, every race result, every photo. The agreement says so explicitly. If you ever want to leave the platform, you can export everything to CSV with one click and walk away. No hostage-taking. No "our way of doing things." It's your club.</p>
+    </details>
+    <details class="faq-item">
+      <summary>What if Fagmie (the developer) stops maintaining it?</summary>
+      <p>Fair question. Three mitigations: (1) The code will be open-source from Phase 3, so any technical person on any club can self-host or contribute. (2) Full handover documentation is maintained alongside the code. (3) Data is always exportable. If PaceHub ceases to exist tomorrow, your club loses the platform but keeps the data.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Can we try it before committing?</summary>
+      <p>Yes. Onboarding is a conversation — we talk, you see the platform, we run a pilot for 60-90 days with a subset of members or a specific pace group, committee reviews, decision time. Nothing locks in until you're sure. And even then, everything is exportable — leaving is always an option.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Does it replace our WhatsApp group?</summary>
+      <p>No — and that's deliberate. WhatsApp is where your club's social life lives and it should stay there. PaceHub is for the things WhatsApp is bad at: structured notices, RSVPs you can count, a race calendar that doesn't get lost, a member roster that isn't on one person's laptop. Think of them as complementary, not competitive.</p>
+    </details>
+    <details class="faq-item">
+      <summary>How does the race calendar get populated?</summary>
+      <p>Today: curated by the maintainer, covering WPA and major national races. Phase 2: open for committee additions per club. Future: RSS / scraping from ASA / RaceTec / Top Events / Endurance Time feeds. Your club can also add its own hosted races at any time.</p>
+    </details>
+    <details class="faq-item">
+      <summary>What about ASA licence updates each year?</summary>
+      <p>Bulk update flow in the admin panel — upload a CSV of current ASA licences, platform matches by member name and updates en masse. Annual ASA renewal becomes a two-minute job for the secretary instead of a two-week chase.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Can coaches who aren't tech-savvy use it?</summary>
+      <p>That's the design goal. Posting a run takes 30 seconds. Adding a member takes a search + tap. The coach dashboard has three tabs (Feed, Members, New Post) — that's the entire surface area they need. Tested with real coaches on real phones, not engineers in a demo environment.</p>
+    </details>
+    <details class="faq-item">
+      <summary>We're a tiny club. Is this overkill?</summary>
+      <p>Probably not. If you have pace groups, a coach, a race calendar, and a committee, PaceHub saves your committee hours per month from day one. If you're a group of five friends meeting Saturday mornings, WhatsApp is fine — come back when you grow.</p>
+    </details>
+    <details class="faq-item">
+      <summary>How do we actually get started?</summary>
+      <p>Get in touch via the link below. We'll have a conversation, understand your club, and decide together whether it's the right fit. If it is, onboarding is typically a week — CSV import of your roster, pace group setup, coach training for your committee, pilot period. See you on the roads.</p>
+    </details>
+  </div>
+</section>
+
+<!-- ================================================= -->
+<!-- ================= CTA =========================== -->
+<!-- ================================================= -->
+<section class="cta-band" id="contact">
+  <h3>Ready to bring your club <em>aboard?</em></h3>
+  <p>Let's talk about your club. No pitch, no pressure. If PaceHub is the right fit, we'll plan onboarding. If it isn't, we'll both know and I'll wish you well.</p>
+  <div class="btns">
+    <a href="mailto:fagmie@pacehub.club" class="btn btn-primary">Email Fagmie →</a>
+    <a href="https://wa.me/27833788388" class="btn btn-ghost">WhatsApp →</a>
+  </div>
+</section>
+
+<!-- ================================================= -->
+<!-- ================= FOOTER ======================== -->
+<!-- ================================================= -->
+<footer>
+  <div class="brand-col">
+    <div class="brand-name">PaceHub<em>.club</em></div>
+    <p>A digital home for South African running clubs. Built by a member, for the club, at zero cost to those who need it free.</p>
+  </div>
+  <div>
+    <h5>Platform</h5>
+    <ul>
+      <li><a href="#what">What it is</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#different">What's different</a></li>
+      <li><a href="#roadmap">Roadmap</a></li>
+    </ul>
+  </div>
+  <div>
+    <h5>For clubs</h5>
+    <ul>
+      <li><a href="#contact">Get onboarded</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="mailto:fagmie@pacehub.club">Email</a></li>
+    </ul>
+  </div>
+  <div>
+    <h5>Connect</h5>
+    <ul>
+      <li><a href="https://wa.me/27833788388">WhatsApp</a></li>
+      <li><a href="#">Instagram (coming)</a></li>
+      <li><a href="#">GitHub (Phase 3)</a></li>
+    </ul>
+  </div>
+</footer>
+
+<div class="footer-bottom">
+  <div>PaceHub.club · Cape Town · 2026</div>
+  <div>Built with love, for the running community</div>
+</div>
+
+</body>
+</html>
