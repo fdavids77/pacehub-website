@@ -85,3 +85,15 @@ Propagation takes 30s-2min. No manual deploy step.
 - Positioning doc: ~/projects/pacehub/docs/POSITIONING.md
 - Live app (pilot): https://itheko.ddns.net
 - Domain registrar: GoDaddy (pacehub.club, pacehub.info)
+
+---
+
+## Project journey
+
+The narrative arc of the whole PaceHub project — origin, pivots, launch, lessons — lives in `~/projects/pacehub/JOURNEY.md`.
+
+Read once for context on why decisions were made the way they were. Refer back at milestones. Update it at major pivots.
+
+## Launch
+
+**This website launched on Friday, 24 April 2026, at ~15:53 SAST.** First verified live via phone on LTE with a valid Let's Encrypt cert issued by GitHub Pages. DNS via GoDaddy (four A records + www CNAME). See the app repo's `JOURNEY.md` for full context.
